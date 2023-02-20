@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "First Rpg", "First Rpg.csproj", "{315273DB-081B-4416-949C-8072B86F347F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{315273DB-081B-4416-949C-8072B86F347F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{315273DB-081B-4416-949C-8072B86F347F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{315273DB-081B-4416-949C-8072B86F347F}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{315273DB-081B-4416-949C-8072B86F347F}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{315273DB-081B-4416-949C-8072B86F347F}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{315273DB-081B-4416-949C-8072B86F347F}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

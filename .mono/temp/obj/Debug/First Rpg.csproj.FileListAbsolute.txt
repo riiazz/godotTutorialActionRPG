@@ -1,0 +1,9 @@
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\bin\Debug\First Rpg.dll
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\bin\Debug\First Rpg.pdb
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\obj\Debug\First Rpg.csproj.AssemblyReference.cache
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\obj\Debug\First Rpg.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\obj\Debug\First Rpg.AssemblyInfoInputs.cache
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\obj\Debug\First Rpg.AssemblyInfo.cs
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\obj\Debug\First Rpg.csproj.CoreCompileInputs.cache
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\obj\Debug\First Rpg.dll
+C:\Users\1677\Documents\Godot\First Rpg\.mono\temp\obj\Debug\First Rpg.pdb
