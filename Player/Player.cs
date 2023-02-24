@@ -22,7 +22,7 @@ public class Player : KinematicBody2D
 		animationState = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/playback");
 	}
 	
-	public override void _PhysicsProcess(float delta){
+	public override void _Process(float delta){
 		switch (state){
 			case Action.MOVE:
 				MoveState(delta);
@@ -40,7 +40,6 @@ public class Player : KinematicBody2D
 		inputVector.x = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
 		inputVector.y = Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up");
 		inputVector = inputVector.Normalized();
-		GD.Print(inputVector);
 		if (inputVector != Vector2.Zero){
 			animationTree.Set("parameters/Idle/blend_position", inputVector);
 			animationTree.Set("parameters/Run/blend_position", inputVector);
