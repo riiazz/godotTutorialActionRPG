@@ -17,11 +17,14 @@ public class Player : KinematicBody2D
 	private AnimationPlayer animationPlayer;
 	private AnimationTree animationTree;
 	private AnimationNodeStateMachinePlayback animationState;
+	public SwordHitbox swordHitbox;
 	public override void _Ready(){
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animationTree = GetNode<AnimationTree>("AnimationTree");
 		animationTree.Active = true;
 		animationState = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/playback");
+		swordHitbox = GetNode<SwordHitbox>("HitBoxPivot/SwordHitBox");
+		swordHitbox.knockbackVector = rollVector;
 	}
 	
 	public override void _PhysicsProcess(float delta){
@@ -45,6 +48,7 @@ public class Player : KinematicBody2D
 		inputVector = inputVector.Normalized();
 		if (inputVector != Vector2.Zero){
 			rollVector = inputVector;
+			swordHitbox.knockbackVector = inputVector;
 			animationTree.Set("parameters/Idle/blend_position", inputVector);
 			animationTree.Set("parameters/Run/blend_position", inputVector);
 			animationTree.Set("parameters/Attack/blend_position", inputVector);
