@@ -7,10 +7,14 @@ public enum Action {
 
 public class Player : KinematicBody2D
 {
-	private const int ACCELERATION = 500;
-	private const int MAX_SPEED = 80;
-	private const int ROLL_SPEED = 100;
-	private const int FRICTION = 500;
+	[Export]
+	private int ACCELERATION = 500;
+	[Export]
+	private int MAX_SPEED = 80;
+	[Export]
+	private int ROLL_SPEED = 100;
+	[Export]
+	private int FRICTION = 500;
 	private Action state = Action.MOVE;
 	private Vector2 velocity = Vector2.Zero;
 	private Vector2 rollVector = Vector2.Left;

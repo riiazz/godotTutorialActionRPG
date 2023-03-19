@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class SwordHitbox : Area2D
+public class SwordHitbox : HitBox
 {
     public Vector2 knockbackVector = Vector2.Zero;
 }
