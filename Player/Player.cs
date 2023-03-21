@@ -17,7 +17,7 @@ public class Player : KinematicBody2D
 	private int FRICTION = 500;
 	private Action state = Action.MOVE;
 	private Vector2 velocity = Vector2.Zero;
-	private Vector2 rollVector = Vector2.Left;
+	private Vector2 rollVector = Vector2.Down;
 	private AnimationPlayer animationPlayer;
 	private AnimationTree animationTree;
 	private AnimationNodeStateMachinePlayback animationState;

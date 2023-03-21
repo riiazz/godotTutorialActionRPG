@@ -3,6 +3,7 @@ using System;
 
 public class Bat : KinematicBody2D
 {
+    private PackedScene EnemyDeathEffect = ResourceLoader.Load<PackedScene>("res://Effects/EnemyDeathEffect.tscn");
     private Vector2 knockback = Vector2.Zero;
     private Stats stats;
 
@@ -22,5 +23,8 @@ public class Bat : KinematicBody2D
 
     public void OnStatsNoHealthEventHandler(){
         QueueFree();
+        Node2D enemyDeathEffect = EnemyDeathEffect.Instance<Node2D>();
+        GetParent().AddChild(enemyDeathEffect);
+        enemyDeathEffect.GlobalPosition = GlobalPosition;
     }
 }
