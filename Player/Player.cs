@@ -22,6 +22,8 @@ public class Player : KinematicBody2D
 	private AnimationTree animationTree;
 	private AnimationNodeStateMachinePlayback animationState;
 	public SwordHitbox swordHitbox;
+	private Stats stats;
+	private HurtBox hurtBox;
 	public override void _Ready(){
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -29,6 +31,9 @@ public class Player : KinematicBody2D
 		animationState = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/playback");
 		swordHitbox = GetNode<SwordHitbox>("HitBoxPivot/SwordHitBox");
 		swordHitbox.knockbackVector = rollVector;
+		stats = GetNode<Stats>("/root/PlayerStats");
+		stats.Connect("NoHealthEventHandler", this, "queue_free");
+		hurtBox = GetNode<HurtBox>("HurtBox");
 	}
 	
 	public override void _PhysicsProcess(float delta){
@@ -96,5 +101,11 @@ public class Player : KinematicBody2D
 
 	private void RollAnimationFinished(){
 		state = Action.MOVE;
+	}
+
+	public void OnHurtBoxAreaEntered(Area2D area){
+		stats.Health -= 1;
+		hurtBox.StartInvincibility(0.5f);
+		hurtBox.CreateHitEffect();
 	}
 }

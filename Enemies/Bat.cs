@@ -22,11 +22,13 @@ public class Bat : KinematicBody2D
     private Vector2 velocity = Vector2.Zero;
     private EnemyAction state = EnemyAction.CHASE;
     private AnimatedSprite sprite;
+    private HurtBox hurtBox;
 
     public override void _Ready(){
         stats = GetNode<Stats>("Stats");
         playerDetectionZone = GetNode<PlayerDetectionZone>("PlayerDetectionZone");
         sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        hurtBox = GetNode<HurtBox>("HurtBox");
     }
 
     public override void _PhysicsProcess(float delta){
@@ -63,6 +65,7 @@ public class Bat : KinematicBody2D
     public void OnHurtBoxAreaEntered(Area2D area){
         stats.Health -= (area as SwordHitbox).Damage;
         knockback = (area as SwordHitbox).knockbackVector * 120;
+        hurtBox.CreateHitEffect();
     }
 
     public void OnStatsNoHealthEventHandler(){

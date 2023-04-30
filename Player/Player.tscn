@@ -1,9 +1,10 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
 [ext_resource path="res://HitBox and HurtBox/HitBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Player/SwordHitbox.cs" type="Script" id=4]
+[ext_resource path="res://HitBox and HurtBox/HurtBox.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -638,6 +639,10 @@ graph_offset = Vector2( 0, -68.6911 )
 [sub_resource type="CapsuleShape2D" id=42]
 height = 12.0
 
+[sub_resource type="CapsuleShape2D" id=54]
+radius = 6.0
+height = 4.0
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 1 )
@@ -699,4 +704,14 @@ position = Vector2( -1, 0 )
 shape = SubResource( 42 )
 disabled = true
 
+[node name="HurtBox" parent="." instance=ExtResource( 5 )]
+collision_layer = 4
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2( -1, -1 )
+shape = SubResource( 54 )
+
+[connection signal="area_entered" from="HurtBox" to="." method="OnHurtBoxAreaEntered"]
+
 [editable path="HitBoxPivot/SwordHitBox"]
+[editable path="HurtBox"]
