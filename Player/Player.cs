@@ -96,7 +96,7 @@ public class Player : KinematicBody2D
 	}
 
 	private void AttackAnimationFinished(){
-		state = Action.MOVE;
+		state = Action.MOVE;		
 	}
 
 	private void RollAnimationFinished(){
