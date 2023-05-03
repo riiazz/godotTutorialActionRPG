@@ -23,12 +23,14 @@ public class Bat : KinematicBody2D
     private EnemyAction state = EnemyAction.CHASE;
     private AnimatedSprite sprite;
     private HurtBox hurtBox;
+    private SoftCollision softCollision;
 
     public override void _Ready(){
         stats = GetNode<Stats>("Stats");
         playerDetectionZone = GetNode<PlayerDetectionZone>("PlayerDetectionZone");
         sprite = GetNode<AnimatedSprite>("AnimatedSprite");
         hurtBox = GetNode<HurtBox>("HurtBox");
+        softCollision = GetNode<SoftCollision>("SoftCollision");
     }
 
     public override void _PhysicsProcess(float delta){
@@ -53,6 +55,7 @@ public class Bat : KinematicBody2D
                 sprite.FlipH = velocity.x < 0;
                 break;
         }
+        velocity += softCollision.GetPushVector() * delta * 400;
         velocity = MoveAndSlide(velocity);
     }
 
