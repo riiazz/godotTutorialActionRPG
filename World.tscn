@@ -489,11 +489,11 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Background" type="Sprite" parent="."]
 position = Vector2( 160, 90 )
 texture = ExtResource( 3 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 320, 180 )
+region_rect = Rect2( 0, 0, 768, 464 )
 
 [node name="DirtPathTileMap" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
@@ -507,10 +507,18 @@ cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( -2, 0, 0, -1, 0, 1, -65536, 0, 1, -65535, 0, 1, -65534, 0, 1, -65533, 0, 1, -65532, 0, 1, -65531, 0, 5, -65530, 0, 196609, -65529, 0, 196610, -65527, 0, 0, -65526, 0, 2, 65534, 0, 131072, 65535, 0, 131073, 0, 0, 131073, 1, 0, 131073, 2, 0, 131073, 3, 0, 131073, 4, 0, 131073, 5, 0, 131074, 9, 0, 65536, 10, 0, 65538, 65545, 0, 65536, 65546, 0, 65538, 131079, 0, 0, 131080, 0, 1, 131081, 0, 131078, 131082, 0, 65538, 196615, 0, 131072, 196616, 0, 131073, 196617, 0, 131073, 196618, 0, 65543, 327679, 0, 0, 262144, 0, 2, 262147, 0, 0, 262148, 0, 2, 262154, 0, 65539, 393215, 0, 131072, 327680, 0, 196613, 327681, 0, 196609, 327682, 0, 196609, 327683, 0, 196614, 327684, 0, 196613, 327685, 0, 196609, 327686, 0, 196610, 327690, 0, 131075 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 80, 104 )
+current = true
+smoothing_enabled = true
+
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 80, 104 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Player"]
+remote_path = NodePath("../../../Camera2D")
 
 [node name="Bushes" type="YSort" parent="YSort"]
 
@@ -597,10 +605,12 @@ position = Vector2( 168, 152 )
 [node name="Bat3" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 24, 40 )
 
-[node name="HealthUI" parent="." instance=ExtResource( 8 )]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 8 )]
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 41.0
 margin_bottom = 41.0
 
-[editable path="HealthUI"]
+[editable path="CanvasLayer/HealthUI"]

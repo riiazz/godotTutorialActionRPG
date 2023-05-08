@@ -25,6 +25,7 @@ public class Player : KinematicBody2D
 	private Stats stats;
 	private HurtBox hurtBox;
 	public override void _Ready(){
+		GD.Randomize();
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animationTree = GetNode<AnimationTree>("AnimationTree");
 		animationTree.Active = true;

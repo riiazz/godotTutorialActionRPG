@@ -19,11 +19,14 @@ public class Bat : KinematicBody2D
     private int MAX_SPEED = 50;
     [Export]
     private int FRICTION = 200;
+    [Export]
+    private int WANDER_TARGET_RANGE = 4;
     private Vector2 velocity = Vector2.Zero;
     private EnemyAction state = EnemyAction.CHASE;
     private AnimatedSprite sprite;
     private HurtBox hurtBox;
     private SoftCollision softCollision;
+    private WanderController wanderController;
 
     public override void _Ready(){
         stats = GetNode<Stats>("Stats");
@@ -31,6 +34,12 @@ public class Bat : KinematicBody2D
         sprite = GetNode<AnimatedSprite>("AnimatedSprite");
         hurtBox = GetNode<HurtBox>("HurtBox");
         softCollision = GetNode<SoftCollision>("SoftCollision");
+        wanderController = GetNode<WanderController>("WanderController");
+
+        Godot.Collections.Array<EnemyAction> stateList = new Godot.Collections.Array<EnemyAction>();
+        stateList.Add(EnemyAction.IDLE);
+        stateList.Add(EnemyAction.WANDER);
+        state = PickRandomState(stateList);
     }
 
     public override void _PhysicsProcess(float delta){
@@ -41,28 +50,65 @@ public class Bat : KinematicBody2D
             case EnemyAction.IDLE:
                 velocity = velocity.MoveToward(Vector2.Zero, FRICTION * delta);
                 SeekPlayer();
+                RandomState();
                 break;
+
             case EnemyAction.WANDER:
+                SeekPlayer();
+                RandomState();
+                AccelerateTowardPoint(wanderController.TargetPosition, delta);
+                if (GlobalPosition.DistanceTo(wanderController.TargetPosition) <= WANDER_TARGET_RANGE)
+                {
+                    UpdateWander();
+                }
                 break;
+                
             case EnemyAction.CHASE:
                 Player player = playerDetectionZone.Player;
                 if (player != null){
-                    Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
-                    velocity = velocity.MoveToward(direction * MAX_SPEED, ACCELERATION * delta);
+                    AccelerateTowardPoint(player.GlobalPosition, delta);
                 } else{
                     state = EnemyAction.IDLE;
                 }
-                sprite.FlipH = velocity.x < 0;
                 break;
         }
         velocity += softCollision.GetPushVector() * delta * 400;
         velocity = MoveAndSlide(velocity);
     }
 
+    private void UpdateWander()
+    {
+        Godot.Collections.Array<EnemyAction> stateList = new Godot.Collections.Array<EnemyAction>();
+        stateList.Add(EnemyAction.IDLE);
+        stateList.Add(EnemyAction.WANDER);
+
+        state = PickRandomState(stateList);
+        wanderController.StartWanderTimer((float)GD.RandRange(1, 3));
+    }
+
+    private void AccelerateTowardPoint(Vector2 point, float delta){
+        Vector2 direction = GlobalPosition.DirectionTo(point);
+        velocity = velocity.MoveToward(direction * MAX_SPEED, ACCELERATION * delta);
+        sprite.FlipH = velocity.x < 0;
+    }
+
+    private void RandomState()
+    {
+        if (wanderController.GetTimeLeft() == 0)
+        {
+            UpdateWander();
+        }
+    }
+
     public void SeekPlayer(){
         if (playerDetectionZone.CanSeePlayer()){
             state = EnemyAction.CHASE;
         }
+    }
+    
+    public EnemyAction PickRandomState(Godot.Collections.Array<EnemyAction> stateList){
+        stateList.Shuffle();
+        return stateList[0];
     }
 
     public void OnHurtBoxAreaEntered(Area2D area){
