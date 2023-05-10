@@ -24,6 +24,8 @@ public class Player : KinematicBody2D
 	public SwordHitbox swordHitbox;
 	private Stats stats;
 	private HurtBox hurtBox;
+	private PackedScene playerHurtSound = ResourceLoader.Load<PackedScene>("res://Player/PlayerHurtSound.tscn");
+	private AnimationPlayer blinkAnimationPlayer;
 	public override void _Ready(){
 		GD.Randomize();
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -35,6 +37,7 @@ public class Player : KinematicBody2D
 		stats = GetNode<Stats>("/root/PlayerStats");
 		stats.Connect("NoHealthEventHandler", this, "queue_free");
 		hurtBox = GetNode<HurtBox>("HurtBox");
+		blinkAnimationPlayer = GetNode<AnimationPlayer>("BlinkAnimationPlayer");
 	}
 	
 	public override void _PhysicsProcess(float delta){
@@ -105,8 +108,18 @@ public class Player : KinematicBody2D
 	}
 
 	public void OnHurtBoxAreaEntered(Area2D area){
-		stats.Health -= 1;
-		hurtBox.StartInvincibility(0.5f);
+		stats.Health -= (area as HitBox).Damage;
+		hurtBox.StartInvincibility(0.6f);
 		hurtBox.CreateHitEffect();
+		PlayerHurtSound hurtSound = playerHurtSound.Instance<PlayerHurtSound>();
+		GetTree().CurrentScene.AddChild(hurtSound);
+	}
+
+	public void OnHurtBoxInvincibilityEndedEventHandler(){
+		blinkAnimationPlayer.Play("Stop");
+	}
+
+	public void OnHurtBoxInvincibilityStartedEventHandler(){
+		blinkAnimationPlayer.Play("Start");
 	}
 }

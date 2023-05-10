@@ -27,6 +27,7 @@ public class Bat : KinematicBody2D
     private HurtBox hurtBox;
     private SoftCollision softCollision;
     private WanderController wanderController;
+    private AnimationPlayer animationPlayer;
 
     public override void _Ready(){
         stats = GetNode<Stats>("Stats");
@@ -35,7 +36,7 @@ public class Bat : KinematicBody2D
         hurtBox = GetNode<HurtBox>("HurtBox");
         softCollision = GetNode<SoftCollision>("SoftCollision");
         wanderController = GetNode<WanderController>("WanderController");
-
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         Godot.Collections.Array<EnemyAction> stateList = new Godot.Collections.Array<EnemyAction>();
         stateList.Add(EnemyAction.IDLE);
         stateList.Add(EnemyAction.WANDER);
@@ -115,6 +116,7 @@ public class Bat : KinematicBody2D
         stats.Health -= (area as SwordHitbox).Damage;
         knockback = (area as SwordHitbox).knockbackVector * 120;
         hurtBox.CreateHitEffect();
+        hurtBox.StartInvincibility(0.4f);
     }
 
     public void OnStatsNoHealthEventHandler(){
@@ -122,5 +124,13 @@ public class Bat : KinematicBody2D
         Node2D enemyDeathEffect = EnemyDeathEffect.Instance<Node2D>();
         GetParent().AddChild(enemyDeathEffect);
         enemyDeathEffect.GlobalPosition = GlobalPosition;
+    }
+
+    public void OnHurtBoxInvincibilityStartedEventHandler(){
+        animationPlayer.Play("Start");
+    }
+
+    public void OnHurtBoxInvincibilityEndedEventHandler(){
+        animationPlayer.Play("Stop");
     }
 }
