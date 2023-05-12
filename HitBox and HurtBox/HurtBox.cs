@@ -19,9 +19,11 @@ public class HurtBox : Area2D
     [Signal]
     public delegate void InvincibilityEndedEventHandler();
     private Timer timer;
+    private CollisionShape2D collisionShape2D;
     public override void _Ready()
     {
         timer = GetNode<Timer>("Timer");
+        collisionShape2D = GetNode<CollisionShape2D>("CollisionShape2D");
     } 
 
     public void StartInvincibility(float duration){
@@ -41,9 +43,11 @@ public class HurtBox : Area2D
 
     public void OnHurtBoxInvincibilityStartedEventHandler(){
         SetDeferred("monitoring", false);
+        //collisionShape2D.SetDeferred("disabled", true);
     }
 
     public void OnHurtBoxInvincibilityEndedEventHandler(){
+        //collisionShape2D.Disabled = false;
         Monitoring = true;
     }
 }
